@@ -14,14 +14,25 @@ import { Pen } from "lucide-react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Field, FieldLabel, FieldSeparator } from "@/components/ui/field";
+import { BorderBeam } from "./ui/border-beam";
 
 function NoteDialog() {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant="outline" className="cursor-pointer">
+        <Button variant="outline" className="relative cursor-pointer">
           <Pen className="h-4 w-4" />
           <span>Add Note</span>
+          <BorderBeam
+            size={40}
+            initialOffset={20}
+            className="from-transparent via-yellow-500 to-transparent"
+            transition={{
+              type: "spring",
+              stiffness: 60,
+              damping: 20,
+            }}
+          />
         </Button>
       </DialogTrigger>
       <DialogContent>

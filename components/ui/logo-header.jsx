@@ -1,10 +1,10 @@
 import { Command } from "lucide-react";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./sidebar";
-import { ModeToggle } from "./theme-toggle";
+import { AnimatedThemeToggler } from "./animated-theme-toggler";
 
 function LogoHeader() {
   return (
-    <SidebarMenu>
+    <SidebarMenu className="py-2">
       <SidebarMenuItem className="flex items-center">
         <SidebarMenuButton size="lg" asChild className="hover:bg-transparent">
           <h1>
@@ -17,9 +17,7 @@ function LogoHeader() {
             </div>
           </h1>
         </SidebarMenuButton>
-        <SidebarMenuButton asChild>
-          <ModeToggle />
-        </SidebarMenuButton>
+        <AnimatedThemeToggler duration={700} />
       </SidebarMenuItem>
     </SidebarMenu>
   );
