@@ -4,6 +4,9 @@ import React from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useCyberNoteData } from "@/context/CyberNoteContext";
 import ReactMarkdown from "react-markdown";
+import NoteDialog from "@/components/note-dialog";
+import { Button } from "@/components/ui/button";
+import { Pen, Trash2 } from "lucide-react";
 
 function Dashboard() {
   const { selectedCategory, user } = useCyberNoteData();
@@ -17,6 +20,9 @@ function Dashboard() {
           <h1 className="text-lg font-medium tracking-tight">
             Welcome back, <span className="font-semibold">{user.username}</span>
           </h1>
+        </div>
+        <div>
+          <NoteDialog />
         </div>
       </header>
 
@@ -35,7 +41,19 @@ function Dashboard() {
         {/* Markdown content */}
         <div className="prose prose-zinc dark:prose-invert max-w-none mt-6 leading-relaxed">
           {selectedCategory ? (
-            <ReactMarkdown>{selectedCategory.content}</ReactMarkdown>
+            <>
+              <div className="flex justify-end gap-2 mb-4">
+                <Button variant="outline" className="cursor-pointer">
+                  <Pen className="h-4 w-4" />
+                  <span>Edit</span>
+                </Button>
+                <Button variant="destructive" className="cursor-pointer">
+                  <Trash2 className="h-4 w-4" />
+                  <span>Delete</span>
+                </Button>
+              </div>
+              <ReactMarkdown>{selectedCategory.content}</ReactMarkdown>
+            </>
           ) : (
             <p className="text-center text-muted-foreground">
               Select a category from the sidebar to view its content.

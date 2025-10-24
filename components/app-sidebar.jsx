@@ -19,9 +19,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User2, ChevronsUpDown, BadgeCheck, LogOut } from "lucide-react";
-import { ModeToggle } from "./ui/theme-toggle";
 import { SearchNote } from "./ui/search";
 import { useCyberNoteData } from "@/context/CyberNoteContext";
+import LogoHeader from "./ui/logo-header";
 
 export function AppSidebar() {
   const { categories, user, selectedCategory, setSelectedCategory } =
@@ -30,10 +30,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center justify-between w-full">
-          <h1 className="text-lg font-bold tracking-tight">CyberNote</h1>
-          <ModeToggle />
-        </div>
+        <LogoHeader />
         <SearchNote />
       </SidebarHeader>
 

@@ -37,7 +37,7 @@ export function CyberNoteProvider({ children }) {
     email: "redwan@cybernote.io",
   });
 
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
     <CyberNoteContext.Provider
