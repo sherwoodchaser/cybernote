@@ -1,47 +1,46 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const CyberNoteContext = createContext({
-  categories: [],
-  user: null,
-  selectedCategory: null,
-  setSelectedCategory: () => {},
-});
+const CyberNoteContext = createContext();
 
 export function CyberNoteProvider({ children }) {
-  const [categories] = useState([
-    {
-      name: "Getting Started",
-      content: `# Getting Started\n\nWelcome to **CyberNote**! This section helps you understand how to navigate the dashboard and manage your notes.`,
-    },
-    {
-      name: "Projects",
-      content: `# Projects\n\nHere you can organize notes related to your projects. Add descriptions, deadlines, and progress updates.`,
-    },
-    {
-      name: "Ideas",
-      content: `# Ideas\n\nCapture your random ideas or thoughts here. Great for brainstorming sessions and future planning.`,
-    },
-    {
-      name: "Resources",
-      content: `# Resources\n\nList useful links, tools, articles, or books that you want to keep for reference.`,
-    },
-    {
-      name: "Personal Notes",
-      content: `# Personal Notes\n\nThis section is for general journaling or daily thoughts. Keep it private and simple.`,
-    },
-  ]);
-
+  const [notes, setNotes] = useState([]);
   const [user, setUser] = useState({
     username: "Redwan",
     email: "redwan@cybernote.io",
   });
+  const [selectedNote, setSelectedNote] = useState(null);
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  // Fetch notes from SQLite
+  useEffect(() => {
+    const fetchNotes = async () => {
+      const res = await fetch("/api/notes");
+      const data = await res.json();
+      setNotes(data);
+    };
+    fetchNotes();
+  }, []);
+
+  // Function to add a note
+  const addNote = async (name, content) => {
+    const res = await fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, content }),
+    });
+    const newNote = await res.json();
+    setNotes((prev) => [...prev, newNote]);
+  };
 
   return (
     <CyberNoteContext.Provider
-      value={{ categories, user, selectedCategory, setSelectedCategory }}
+      value={{
+        notes,
+        user,
+        selectedNote,
+        setSelectedNote,
+        addNote,
+      }}
     >
       {children}
     </CyberNoteContext.Provider>
